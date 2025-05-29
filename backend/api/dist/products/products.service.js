@@ -35,6 +35,34 @@ let ProductsService = class ProductsService {
             throw new common_1.InternalServerErrorException('Error creating product');
         }
     }
+    async findAll() {
+        try {
+            return await this.productRepository.find();
+        }
+        catch (error) {
+            console.error('Error fetching all products', error);
+            throw new common_1.InternalServerErrorException('Error fetching all products');
+        }
+    }
+    async findOne(id) {
+        try {
+            const product = await this.productRepository.findOneBy({ id });
+            if (!product) {
+                throw new common_1.NotFoundException(`Product with ID "${id}" not found.`);
+            }
+            return product;
+        }
+        catch (error) {
+            if (error instanceof common_1.NotFoundException) {
+                throw error;
+            }
+            if (error.message.includes('invalid input syntax for type uuid')) {
+                throw new common_1.BadRequestException(`Invalid ID format: "${id}". Please provide a valid UUID.`);
+            }
+            console.error(`Error fetching product with ID "${id}":`, error);
+            throw new common_1.InternalServerErrorException(`Failed to fetch product with ID "${id}".`);
+        }
+    }
 };
 exports.ProductsService = ProductsService;
 exports.ProductsService = ProductsService = __decorate([

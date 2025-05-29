@@ -5,4 +5,6 @@ export declare class ProductsService {
     private readonly productRepository;
     constructor(productRepository: Repository<Product>);
     create(createProductDto: CreateProductDto): Promise<Product>;
+    findAll(): Promise<Product[]>;
+    findOne(id: string): Promise<Product>;
 }

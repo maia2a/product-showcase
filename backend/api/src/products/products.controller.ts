@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Get,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -23,5 +25,15 @@ export class ProductsController {
   )
   async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
     return this.productsService.create(createProductDto); // Ele chama o método create do service para criar o produto
+  }
+
+  @Get() // Endpoint para obter todos os produtos
+  async findAll(): Promise<Product[]> {
+    return this.productsService.findAll(); // Ele chama o método findAll do service para buscar todos os produtos
+  }
+
+  @Get(':id') // Endpoint para obter um produto específico
+  async findOne(@Param('id') id: string): Promise<Product> {
+    return this.productsService.findOne(id); // Ele chama o método findOne do service para buscar um produto específico
   }
 }
