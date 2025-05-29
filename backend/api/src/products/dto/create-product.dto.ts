@@ -19,7 +19,7 @@ export class CreateProductDto {
   @IsString()
   @IsOptional() //Descrição é opcional
   @MaxLength(1000)
-  description: string; //Validação de descrição
+  description?: string; //Validação de descrição
 
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)

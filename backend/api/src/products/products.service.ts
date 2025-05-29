@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import type { Repository } from 'typeorm';
-import type { CreateProductDto } from './dto/create-product.dto';
+import { Repository } from 'typeorm';
+import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
 
 @Injectable()

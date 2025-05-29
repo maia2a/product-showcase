@@ -38,7 +38,7 @@ __decorate([
 ], CreateProductDto.prototype, "price", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsURL)(),
+    (0, class_validator_1.IsUrl)(),
     (0, class_validator_1.MaxLength)(255),
     __metadata("design:type", String)
 ], CreateProductDto.prototype, "imageUrl", void 0);

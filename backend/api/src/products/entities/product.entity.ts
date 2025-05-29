@@ -14,10 +14,10 @@ export class Product {
   @Column({ type: 'varchar', length: 255, nullable: false })
   name: string; // Campo para o nome do produto
 
-  @Column({ type: 'text', length: 255, nullable: false })
+  @Column({ type: 'text', nullable: false })
   description: string; // Campo para a descrição do produto
 
-  @Column({ type: 'decimal', nullable: false })
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
   price: number; // Campo para o preço do produto
 
   @Column({ type: 'varchar', length: 255, nullable: true })

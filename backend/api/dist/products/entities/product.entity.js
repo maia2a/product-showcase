@@ -30,11 +30,11 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'text', length: 255, nullable: false }),
+    (0, typeorm_1.Column)({ type: 'text', nullable: false }),
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'decimal', nullable: false }),
+    (0, typeorm_1.Column)({ type: 'decimal', precision: 10, scale: 2, nullable: false }),
     __metadata("design:type", Number)
 ], Product.prototype, "price", void 0);
 __decorate([
