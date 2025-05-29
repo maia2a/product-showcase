@@ -19,7 +19,7 @@ import { ProductsService } from './products/products.service';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    ProductsModule,
+    ProductsModule, // Importa o módulo de produtos
   ],
   controllers: [AppController, ProductsController],
   providers: [AppService, ProductsService],
