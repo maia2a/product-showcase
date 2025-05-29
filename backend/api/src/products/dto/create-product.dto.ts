@@ -3,7 +3,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  IsURL,
+  IsUrl,
   MaxLength,
   Min,
   MinLength,
@@ -17,7 +17,7 @@ export class CreateProductDto {
   name: string; //Validação de nome
 
   @IsString()
-  @IsOptional() //Descricao é opcional
+  @IsOptional() //Descrição é opcional
   @MaxLength(1000)
   description: string; //Validação de descrição
 
@@ -26,7 +26,7 @@ export class CreateProductDto {
   price: number; //Validação de preço
 
   @IsOptional()
-  @IsURL()
+  @IsUrl()
   @MaxLength(255)
   imageUrl?: string; //Validação de imagem url
 }
