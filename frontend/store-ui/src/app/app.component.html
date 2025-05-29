@@ -1,0 +1,15 @@
+<header>
+  <h1>Welcome to my {{ title }}</h1>
+  <nav>
+    <a routerLink="/products" routerLinkActive="active">Products</a>
+    <a routerLink="/cart" routerLinkActive="active">Cart</a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <p>&copy; {{ currentYear }} My Awesome Store. All rights reserved.</p>
+</footer>
