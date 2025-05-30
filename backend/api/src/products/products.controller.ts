@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -28,8 +29,8 @@ export class ProductsController {
   }
 
   @Get() // Endpoint para obter todos os produtos
-  async findAll(): Promise<Product[]> {
-    return this.productsService.findAll(); // Ele chama o método findAll do service para buscar todos os produtos
+  async findAll(@Query('search') searchTerm?: string): Promise<Product[]> {
+    return this.productsService.findAll(searchTerm); // Ele chama o método findAll do service para buscar todos os produtos
   }
 
   @Get(':id') // Endpoint para obter um produto específico

@@ -7,7 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
 
@@ -31,9 +31,25 @@ export class ProductsService {
     }
   }
 
-  async findAll(): Promise<Product[]> {
+  async findAll(searchTerm?: string): Promise<Product[]> {
     try {
-      return await this.productRepository.find();
+      if (searchTerm) {
+        return await this.productRepository.find({
+          where: [
+            { name: ILike(`%${searchTerm}%`) },
+            { description: ILike(`%${searchTerm}%`) },
+          ],
+          order: {
+            name: 'ASC',
+          },
+        });
+      } else {
+        return await this.productRepository.find({
+          order: {
+            name: 'ASC',
+          },
+        });
+      }
     } catch (error) {
       console.error('Error fetching all products', error);
       throw new InternalServerErrorException('Error fetching all products');

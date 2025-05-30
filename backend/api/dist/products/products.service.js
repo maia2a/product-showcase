@@ -35,9 +35,26 @@ let ProductsService = class ProductsService {
             throw new common_1.InternalServerErrorException('Error creating product');
         }
     }
-    async findAll() {
+    async findAll(searchTerm) {
         try {
-            return await this.productRepository.find();
+            if (searchTerm) {
+                return await this.productRepository.find({
+                    where: [
+                        { name: (0, typeorm_2.ILike)(`%${searchTerm}%`) },
+                        { description: (0, typeorm_2.ILike)(`%${searchTerm}%`) },
+                    ],
+                    order: {
+                        name: 'ASC',
+                    },
+                });
+            }
+            else {
+                return await this.productRepository.find({
+                    order: {
+                        name: 'ASC',
+                    },
+                });
+            }
         }
         catch (error) {
             console.error('Error fetching all products', error);

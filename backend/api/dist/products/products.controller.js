@@ -24,8 +24,8 @@ let ProductsController = class ProductsController {
     async create(createProductDto) {
         return this.productsService.create(createProductDto);
     }
-    async findAll() {
-        return this.productsService.findAll();
+    async findAll(searchTerm) {
+        return this.productsService.findAll(searchTerm);
     }
     async findOne(id) {
         return this.productsService.findOne(id);
@@ -46,8 +46,9 @@ __decorate([
 ], ProductsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)('search')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAll", null);
 __decorate([

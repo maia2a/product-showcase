@@ -5,6 +5,6 @@ export declare class ProductsController {
     private readonly productsService;
     constructor(productsService: ProductsService);
     create(createProductDto: CreateProductDto): Promise<Product>;
-    findAll(): Promise<Product[]>;
+    findAll(searchTerm?: string): Promise<Product[]>;
     findOne(id: string): Promise<Product>;
 }
