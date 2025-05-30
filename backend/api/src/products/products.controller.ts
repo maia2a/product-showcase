@@ -8,6 +8,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import type { PaginationResult } from 'src/common/interfaces/pagination-result.interface';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
@@ -29,8 +31,16 @@ export class ProductsController {
   }
 
   @Get() // Endpoint para obter todos os produtos
-  async findAll(@Query('search') searchTerm?: string): Promise<Product[]> {
-    return this.productsService.findAll(searchTerm); // Ele chama o método findAll do service para buscar todos os produtos
+  @UsePipes(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  ) // Garante a transformação e validação dos query params
+  async findAll(
+    @Query() paginationQuery: PaginationQueryDto,
+  ): Promise<PaginationResult<Product>> {
+    return this.productsService.findAll(paginationQuery); // Ele chama o método findAll do service para buscar todos os produtos
   }
 
   @Get(':id') // Endpoint para obter um produto específico

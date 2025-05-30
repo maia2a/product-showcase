@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
+const pagination_query_dto_1 = require("../common/dto/pagination-query.dto");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const products_service_1 = require("./products.service");
 let ProductsController = class ProductsController {
@@ -24,8 +25,8 @@ let ProductsController = class ProductsController {
     async create(createProductDto) {
         return this.productsService.create(createProductDto);
     }
-    async findAll(searchTerm) {
-        return this.productsService.findAll(searchTerm);
+    async findAll(paginationQuery) {
+        return this.productsService.findAll(paginationQuery);
     }
     async findOne(id) {
         return this.productsService.findOne(id);
@@ -46,9 +47,13 @@ __decorate([
 ], ProductsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('search')),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+    })),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [pagination_query_dto_1.PaginationQueryDto]),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAll", null);
 __decorate([

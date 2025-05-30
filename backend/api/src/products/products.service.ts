@@ -7,7 +7,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interfaces/pagination-result.interface';
+import {
+  ILike,
+  Repository,
+  type FindManyOptions,
+  type FindOptionsWhere,
+} from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
 
@@ -31,28 +38,50 @@ export class ProductsService {
     }
   }
 
-  async findAll(searchTerm?: string): Promise<Product[]> {
+  async findAll(
+    paginationQueryDto: PaginationQueryDto,
+  ): Promise<PaginationResult<Product>> {
+    const { page = 1, limit = 10, search: searchTerm } = paginationQueryDto;
+    const skip = (page - 1) * limit; // Calcula o número de itens a serem pulados
+
+    let whereConditions:
+      | FindOptionsWhere<Product>[]
+      | FindOptionsWhere<Product> = {};
+
+    if (searchTerm) {
+      whereConditions = [
+        { name: ILike(`%${searchTerm}%`) },
+        { description: ILike(`%${searchTerm}%`) },
+      ];
+    }
+
+    const findOptions: FindManyOptions<Product> = {
+      where: whereConditions,
+      order: {
+        name: 'ASC',
+      },
+      take: limit,
+      skip: skip,
+    };
+
     try {
-      if (searchTerm) {
-        return await this.productRepository.find({
-          where: [
-            { name: ILike(`%${searchTerm}%`) },
-            { description: ILike(`%${searchTerm}%`) },
-          ],
-          order: {
-            name: 'ASC',
-          },
-        });
-      } else {
-        return await this.productRepository.find({
-          order: {
-            name: 'ASC',
-          },
-        });
-      }
+      const [items, totalItems] =
+        await this.productRepository.findAndCount(findOptions);
+
+      return {
+        data: items,
+        meta: {
+          totalItems,
+          itemsPerPage: Number(limit),
+          totalPages: Math.ceil(totalItems / limit),
+          currentPage: Number(page),
+        },
+      };
     } catch (error) {
-      console.error('Error fetching all products', error);
-      throw new InternalServerErrorException('Error fetching all products');
+      console.error('Error fetching paginated products', error);
+      throw new InternalServerErrorException(
+        'Failed to fetch paginated products',
+      );
     }
   }
 

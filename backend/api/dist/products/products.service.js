@@ -35,30 +35,39 @@ let ProductsService = class ProductsService {
             throw new common_1.InternalServerErrorException('Error creating product');
         }
     }
-    async findAll(searchTerm) {
+    async findAll(paginationQueryDto) {
+        const { page = 1, limit = 10, search: searchTerm } = paginationQueryDto;
+        const skip = (page - 1) * limit;
+        let whereConditions = {};
+        if (searchTerm) {
+            whereConditions = [
+                { name: (0, typeorm_2.ILike)(`%${searchTerm}%`) },
+                { description: (0, typeorm_2.ILike)(`%${searchTerm}%`) },
+            ];
+        }
+        const findOptions = {
+            where: whereConditions,
+            order: {
+                name: 'ASC',
+            },
+            take: limit,
+            skip: skip,
+        };
         try {
-            if (searchTerm) {
-                return await this.productRepository.find({
-                    where: [
-                        { name: (0, typeorm_2.ILike)(`%${searchTerm}%`) },
-                        { description: (0, typeorm_2.ILike)(`%${searchTerm}%`) },
-                    ],
-                    order: {
-                        name: 'ASC',
-                    },
-                });
-            }
-            else {
-                return await this.productRepository.find({
-                    order: {
-                        name: 'ASC',
-                    },
-                });
-            }
+            const [items, totalItems] = await this.productRepository.findAndCount(findOptions);
+            return {
+                data: items,
+                meta: {
+                    totalItems,
+                    itemsPerPage: Number(limit),
+                    totalPages: Math.ceil(totalItems / limit),
+                    currentPage: Number(page),
+                },
+            };
         }
         catch (error) {
-            console.error('Error fetching all products', error);
-            throw new common_1.InternalServerErrorException('Error fetching all products');
+            console.error('Error fetching paginated products', error);
+            throw new common_1.InternalServerErrorException('Failed to fetch paginated products');
         }
     }
     async findOne(id) {
