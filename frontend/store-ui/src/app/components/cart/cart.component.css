@@ -1,0 +1,116 @@
+/* src/app/components/cart/cart.component.css */
+.cart-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.cart-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 2em;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+}
+
+.cart-table th, .cart-table td {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.cart-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #555;
+}
+
+.cart-item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+.quantity-btn, .remove-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 0.9em;
+}
+
+.remove-btn {
+  background-color: #dc3545; /* Vermelho para remover */
+}
+
+.quantity-btn:hover, .remove-btn:hover {
+  opacity: 0.85;
+}
+
+.cart-summary {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.cart-summary h3 {
+  font-size: 1.6em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.clear-cart-btn, .checkout-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  text-decoration: none; /* Para o routerLink do checkout */
+  display: inline-block; /* Para o routerLink do checkout */
+}
+
+.checkout-btn {
+  background-color: #28a745; /* Verde para finalizar compra */
+}
+
+.clear-cart-btn:hover, .checkout-btn:hover {
+  opacity: 0.9;
+}
+
+.empty-cart-message {
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 1.3em;
+  color: #555;
+}
+
+.shop-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.shop-link:hover {
+  background-color: #0056b3;
+}

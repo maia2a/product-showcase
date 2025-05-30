@@ -2,11 +2,18 @@
   <h1>{{ title }}</h1>
   <nav>
     <a routerLink="/products">Products</a>
-    </nav>
+    <a routerLink="/cart"
+      >Cart
+      <span *ngIf="itemCount$ | async as count" class="cart-count"
+        >({{ count }})</span
+      ></a
+    >
+  </nav>
 </header>
 
 <main class="app-main">
-  <router-outlet></router-outlet> </main>
+  <router-outlet></router-outlet>
+</main>
 
 <footer class="app-footer">
   <p>&copy; {{ currentYear }} {{ title }}. All rights reserved.</p>
