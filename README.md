@@ -276,7 +276,7 @@ A aplicação utiliza a arquitetura de componentes standalone do Angular para mo
 
 ---
 
-## [Seu Nome/Contato - Opcional]
+## [Contato]
 
 -   Nome: [Gabriell Maia do Amaral Duarte]
 -   Email: [gabrielldeveloper@gmail.com]
