@@ -43,6 +43,31 @@ export class CartService {
     );
   }
 
+  removeItem(productIdToRemove: string): void {
+    const currentItems = this.itemsSubject.getValue();
+    const updatedItems = currentItems.filter(
+      (item) => item.product.id !== productIdToRemove
+    );
+    this.itemsSubject.next(updatedItems);
+  }
+
+  clearCart(): void {
+    this.itemsSubject.next([]);
+  }
+
+  updateItemQuantity(productId: string, newQuantity: number): void {
+    if (newQuantity < 1) {
+      this.removeItem(productId);
+      return;
+    }
+
+    const currentItems = this.itemsSubject.getValue();
+    const updatedItems = currentItems.map((item) => {
+      return item.product.id === productId ? { ...item, quantity: newQuantity } : item;
+    });
+    this.itemsSubject.next(updatedItems);
+  }
+
   getTotalPrice(): Observable<number> {
     return this.items$.pipe(
       map((items) =>

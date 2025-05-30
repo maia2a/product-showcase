@@ -22,4 +22,25 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
+  // Método para remover um item do carrinho
+  removeItem(productId: string): void {
+    this.cartService.removeItem(productId);
+  }
+
+  // Método para aumentar a quantidade de um item
+  increaseQuantity(item: CartItem): void {
+    this.cartService.updateItemQuantity(item.product.id, item.quantity + 1);
+  }
+
+  // Método para diminuir a quantidade de um item
+  decreaseQuantity(item: CartItem): void {
+    this.cartService.updateItemQuantity(item.product.id, -1);
+  }
+
+  // Método para limpar o carrinho
+  clearCart(): void {
+    if (confirm('Are you sure you want to clear the cart?')) {
+      this.cartService.clearCart();
+    }
+  }
 }

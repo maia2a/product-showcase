@@ -28,19 +28,45 @@
               />
             </td>
             <td>R${{ item.product.price | number : "1.2-2" }}</td>
-            <td>
+            <td class="quantity-controls">
+              <button
+                (click)="decreaseQuantity(item)"
+                class="quantity-btn decrease-btn"
+                [disabled]="item.quantity <= 1"
+                title="Decrease"
+              >
+                -
+              </button>
               <span>{{ item.quantity }}</span>
+              <button
+                (click)="increaseQuantity(item)"
+                class="quantity-btn increase-btn"
+                title="Increase"
+              >
+                +
+              </button>
             </td>
             <td>
               R${{ item.product.price * item.quantity | number : "1.2-2" }}
             </td>
-            <td></td>
+            <td>
+              <button (click)="removeItem(item.product.id)" class="remove-btn">
+                Remove
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
 
       <div class="cart-summary">
         <h3>Total: R${{ totalPrice$ | async | number : "1.2-2" }}</h3>
+        <button
+          *ngIf="items.length > 0"
+          (click)="clearCart()"
+          class="clear-cart-btn"
+        >
+          Clean Cart
+        </button>
         <button routerLink="/checkout" class="checkout-btn">Checkout</button>
       </div>
     </div>
