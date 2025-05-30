@@ -4,13 +4,15 @@
   <div class="search-container">
     <input
       type="text"
-      placeholder="Search products..."
+      placeholder="Search by name..."
       [(ngModel)]="searchTerm"
       (keyup.enter)="onSearch()"
       class="search-input"
     />
     <button (click)="onSearch()" class="search-button">Search</button>
-    <button (click)="clearSearch()" class="clear-button" *ngIf="searchTerm">Clear</button>
+    <button (click)="clearSearch()" class="clear-button" *ngIf="searchTerm">
+      Clear
+    </button>
   </div>
 
   <div *ngIf="isLoading" class="loading-message">
@@ -21,26 +23,75 @@
     <p><strong>Error:</strong> {{ error }}</p>
   </div>
 
-  <div *ngIf="!isLoading && !error && products.length === 0 && searchTerm" class="no-products-message">
+  <div
+    *ngIf="!isLoading && !error && products.length === 0 && searchTerm"
+    class="no-products-message"
+  >
     <p>No products found matching "{{ searchTerm }}".</p>
   </div>
 
-  <div *ngIf="!isLoading && !error && products.length === 0 && !searchTerm" class="no-products-message">
+  <div
+    *ngIf="!isLoading && !error && products.length === 0 && !searchTerm"
+    class="no-products-message"
+  >
     <p>No products currently available.</p>
   </div>
 
-  <div *ngIf="!isLoading && !error && products.length > 0" class="products-grid">
-    <div *ngFor="let product of products" class="product-card">
-      <a [routerLink]="['/products', product.id]" class="product-link-wrapper">
-        <img
-          [src]="product.imageUrl || 'https://via.placeholder.com/200x150?text=No+Image'"
-          [alt]="product.name"
-          class="product-image">
-        <h3>{{ product.name }}</h3>
-        <p class="description">{{ product.description || 'No description available.' }}</p>
-      </a>
-      <p class="price">R${{ product.price | number:'1.2-2' }}</p>
-      <a [routerLink]="['/products', product.id]" class="details-button">Details</a>
+  <div *ngIf="!isLoading && !error && products.length > 0">
+    <div class="products-grid">
+      <div *ngFor="let product of products" class="product-card">
+        <a
+          [routerLink]="['/products', product.id]"
+          class="product-link-wrapper"
+        >
+          <img
+            [src]="
+              product.imageUrl ||
+              'https://via.placeholder.com/200x150?text=No+Image'
+            "
+            [alt]="product.name"
+            class="product-image"
+          />
+          <h3>{{ product.name }}</h3>
+          <p class="description">
+            {{ product.description || "No description available." }}
+          </p>
+        </a>
+        <p class="price">R${{ product.price | number : "1.2-2" }}</p>
+        <a [routerLink]="['/products', product.id]" class="details-button"
+          >Details</a
+        >
+      </div>
+    </div>
+
+    <div class="pagination-controls" *ngIf="totalPages > 1">
+      <button
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+        class="pagination-button"
+      >
+        Anterior
+      </button>
+      <ng-container *ngFor="let pageNum of getPageNumbers()">
+        <button
+          (click)="goToPage(pageNum)"
+          [class.active]="pageNum === currentPage"
+          class="pagination-button page-number"
+        >
+          {{ pageNum }}
+        </button>
+      </ng-container>
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+        class="pagination-button"
+      >
+        Next
+      </button>
+      <span class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }} (Total:
+        {{ totalItems }} itens)
+      </span>
     </div>
   </div>
 </div>

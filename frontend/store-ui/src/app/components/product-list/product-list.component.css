@@ -129,3 +129,61 @@
 .clear-button:hover {
   background-color: #545b62;
 }
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  padding: 10px;
+  flex-wrap: wrap; /* Permite que os botões quebrem linha em telas menores */
+}
+
+.pagination-button {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+  padding: 8px 12px;
+  margin: 0 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  font-size: 0.9em;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination-button:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  border-color: #dee2e6;
+  cursor: not-allowed;
+}
+
+.pagination-button.page-number.active {
+  background-color: #0056b3; /* Cor mais escura para a página ativa */
+  border-color: #004085;
+  font-weight: bold;
+}
+
+.pagination-info {
+  margin-left: 15px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* Ajustes para telas menores se necessário */
+@media (max-width: 600px) {
+  .pagination-controls {
+    flex-direction: column; /* Empilha os elementos verticalmente */
+  }
+  .pagination-button,
+  .pagination-info {
+    margin-bottom: 8px; /* Adiciona espaço entre os botões empilhados */
+  }
+  .pagination-info {
+    margin-left: 0;
+  }
+}
