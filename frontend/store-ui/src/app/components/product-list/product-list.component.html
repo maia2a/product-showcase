@@ -1,6 +1,18 @@
 <div class="list-container">
   <h2>Our Products</h2>
 
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Search products..."
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="onSearch()"
+      class="search-input"
+    />
+    <button (click)="onSearch()" class="search-button">Search</button>
+    <button (click)="clearSearch()" class="clear-button" *ngIf="searchTerm">Clear</button>
+  </div>
+
   <div *ngIf="isLoading" class="loading-message">
     <p>Loading products, please wait...</p>
   </div>
@@ -9,33 +21,26 @@
     <p><strong>Error:</strong> {{ error }}</p>
   </div>
 
-  <div
-    *ngIf="!isLoading && !error && products.length === 0"
-    class="no-products-message"
-  >
+  <div *ngIf="!isLoading && !error && products.length === 0 && searchTerm" class="no-products-message">
+    <p>No products found matching "{{ searchTerm }}".</p>
+  </div>
+
+  <div *ngIf="!isLoading && !error && products.length === 0 && !searchTerm" class="no-products-message">
     <p>No products currently available.</p>
   </div>
 
-  <div
-    *ngIf="!isLoading && !error && products.length > 0"
-    class="products-grid"
-  >
+  <div *ngIf="!isLoading && !error && products.length > 0" class="products-grid">
     <div *ngFor="let product of products" class="product-card">
       <a [routerLink]="['/products', product.id]" class="product-link-wrapper">
         <img
-          [src]="
-            product.imageUrl ||
-            'https://via.placeholder.com/200x150?text=No+Image'
-          "
+          [src]="product.imageUrl || 'https://via.placeholder.com/200x150?text=No+Image'"
           [alt]="product.name"
-          class="product-image"
-        />
+          class="product-image">
         <h3>{{ product.name }}</h3>
-        <p class="description">
-          {{ product.description || "No description available." }}
-        </p>
-        <p class="price">R${{ product.price | number : "1.2-2" }}</p>
+        <p class="description">{{ product.description || 'No description available.' }}</p>
       </a>
+      <p class="price">R${{ product.price | number:'1.2-2' }}</p>
+      <a [routerLink]="['/products', product.id]" class="details-button">Details</a>
     </div>
   </div>
 </div>

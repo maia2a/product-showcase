@@ -1,5 +1,4 @@
-
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
@@ -12,13 +11,15 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
+  getProducts(searchTerm?: string): Observable<Product[]> {
+    let params = new HttpParams();
+    if (searchTerm && searchTerm.trim() !== '') {
+      params = params.append('search', searchTerm);
+    }
+    return this.http.get<Product[]>(this.apiUrl, { params: params });
   }
 
   getProductById(id: string): Observable<Product> {
-    return this.http.get<Product>(
-      `${this.apiUrl}/${id}`
-    );
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 }
