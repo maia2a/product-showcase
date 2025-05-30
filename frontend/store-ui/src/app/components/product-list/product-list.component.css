@@ -82,3 +82,10 @@
 .details-button:hover {
   background-color: #0056b3;
 }
+
+
+.product-link-wrapper {
+  text-decoration: none;
+  color: inherit; /* Herda a cor do texto do pai */
+  display: block; /* Faz o link ocupar o espaço para ser clicável */
+}

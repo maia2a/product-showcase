@@ -1,0 +1,42 @@
+<div class="product-detail-container">
+  <div class="loading-message" *ngIf="isLoading">
+    <p>Loading product details, please wait...</p>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    <p><strong>Error:</strong> {{ error }}</p>
+    <a routerLink="/products">Going back to products</a>
+  </div>
+
+  <div *ngIf="!isLoading && !error && product" class="product-details">
+    <div class="product-image-section">
+      <img
+        [src]="
+          product.imageUrl ||
+          'https://via.placeholder.com/400x300?text=No+Image'
+        "
+        [alt]="product.name"
+        class="product-image-large"
+      />
+    </div>
+    <div class="product-info-section">
+      <h2>{{ product.name }}</h2>
+      <p class="description">
+        {{ product.description || "No description available." }}
+      </p>
+      <p class="price">R${{ product.price | number : "1.2-2" }}</p>
+      <button class="add-to-cart-button" (click)="addToCart()">
+        Add to Cart
+      </button>
+      <br />
+      <a routerLink="/products" class="back-to-products-link"
+        >⬅️ Voltar para a lista</a
+      >
+    </div>
+
+    <div *ngIf="!isLoading && !error && !product" class="no-product-message">
+      <p>Details of the products cannot be loaded.</p>
+      <a routerLink="/products">Going back to products list</a>
+    </div>
+  </div>
+</div>

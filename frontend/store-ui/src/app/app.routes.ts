@@ -1,5 +1,6 @@
 // src/app/app.routes.ts
 import { Routes } from '@angular/router';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ProductListComponent } from './components/product-list/product-list.component'; // Import the component
 
 export const routes: Routes = [
@@ -16,7 +17,8 @@ export const routes: Routes = [
     component: ProductListComponent // Loads ProductListComponent when this path is active
   },
 
-  // We will add more routes later, for example:
-  // { path: 'products/:id', component: ProductDetailComponent },
-  // { path: 'cart', component: CartComponent },
+  {
+    path: 'products/:id',
+    component: ProductDetailComponent
+  }
 ];
