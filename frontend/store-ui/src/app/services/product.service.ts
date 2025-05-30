@@ -18,7 +18,7 @@ export class ProductService {
 
   getProductById(id: string): Observable<Product> {
     return this.http.get<Product>(
-      `<span class="math-inline">\{this\.apiUrl\}/</span>{id}`
+      `${this.apiUrl}/${id}`
     );
   }
 }
