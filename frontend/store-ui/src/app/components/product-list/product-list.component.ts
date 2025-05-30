@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Product, ProductService } from '../../services/product.service';
+import { RouterLink } from '@angular/router';
+
+import { Product } from '../../models/product.model';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
-  templateUrl: './product-list.html',
-  styleUrl: './product-list.css',
+  imports: [CommonModule, RouterLink],
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css'],
 })
-export class ProductList implements OnInit {
+export class ProductListComponent implements OnInit {
   products: Product[] = [];
   isLoading: boolean = true;
   error: string | null = null;
@@ -26,13 +27,14 @@ export class ProductList implements OnInit {
     this.isLoading = true;
     this.error = null;
     this.productService.getProducts().subscribe({
-      next: (data: Product[]) => {
+      next: (data) => {
         this.products = data;
         this.isLoading = false;
       },
       error: (err) => {
         console.error('Error fetching products:', err);
-        this.error = 'Failed to load products. Try again later.';
+        this.error =
+          'Failed to load products. Please check backend connectivity.';
         this.isLoading = false;
       },
     });

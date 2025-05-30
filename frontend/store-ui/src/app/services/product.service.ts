@@ -1,33 +1,24 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-export interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  price: number;
-  imageUrl?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import { Product } from '../models/product.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', // Service is available application-wide
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/products';
+  private apiUrl = 'http://localhost:3000/products'; // Backend API URL
+
   constructor(private http: HttpClient) {}
 
-  // Método para obter todos os produtos
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
-  // Método para obter um produto específico
-  getProduct(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(
+      `<span class="math-inline">\{this\.apiUrl\}/</span>{id}`
+    );
   }
-
-  // Método para criar um novo produto
 }
